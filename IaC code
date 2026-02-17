@@ -2,9 +2,11 @@
 CLUSTER_NAME="kmc-dataproc-cluster"
 REGION="asia-south1"
 gcloud dataproc clusters create ${CLUSTER_NAME} \
+  --project=kmc-hospital-project \
   --region ${REGION}
+  --enable-component-gateway \
   --num-workers=2 \
-  --worker-machine-type=n1-standard-2 \
+  --worker-machine-type=n4-standard-2 \
   --worker-boot-disk-size=50 \
   --master-machine-type=n4-standard-2 \
   --master-boot-disk-size=50 \
