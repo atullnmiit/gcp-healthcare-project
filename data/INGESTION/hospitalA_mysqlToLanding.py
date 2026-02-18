@@ -6,10 +6,16 @@ import json
 
 
 # Initialize your SparkSession with smaller memeory settings. 2Gb is safe for n4-standard-2
+
+# Stop any existing session first
+try:
+    spark.stop()
+except:
+    pass
+
 spark = SparkSession.builder \
-    .appName("kmc-hospital") \
+    .appName("FixedMemoryJob") \
     .config("spark.executor.memory", "2g") \
-    .config("spark.executor.cores", "1") \
     .config("spark.driver.memory", "2g") \
     .getOrCreate()
 
