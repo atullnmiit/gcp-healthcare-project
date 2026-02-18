@@ -50,7 +50,7 @@ def log_event(event_type, message, table=None):
 def save_logs_to_gcs():
     """Save logs to a JSON file and upload to GCS"""
     log_filename = f"pipeline_log_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.json"
-    log_filepath = f"temp/pipeline_logs/{log_filename}"  
+    log_filepath = f"Temp/pipeline_logs/{log_filename}"  
     
     json_data = json.dumps(log_entries, indent=4)
 
