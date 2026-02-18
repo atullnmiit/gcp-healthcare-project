@@ -4,23 +4,6 @@ from pyspark.sql import SparkSession
 import datetime
 import json
 
-
-# Initialize your SparkSession with smaller memeory settings. 2Gb is safe for n4-standard-2
-
-# Stop any existing session first
-try:
-    spark.stop()
-except:
-    pass
-
-spark = SparkSession.builder \
-    .appName("FixedMemoryJob") \
-    .config("spark.executor.memory", "2g") \
-    .config("spark.driver.memory", "2g") \
-    .getOrCreate()
-
-# Now run your pipeline
-
 # Initialize GCS & BigQuery Clients
 storage_client = storage.Client()
 bq_client = bigquery.Client()
