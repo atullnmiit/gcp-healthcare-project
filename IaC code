@@ -1,17 +1,17 @@
 #-----gcloud SDK code to create Dataproc cluster----------#
-CLUSTER_NAME=my-cluster-demo
-	REGION=us-east1
-	PROJECT_ID=avd-databricks-demo
+CLUSTER_NAME=kmc-hospital-cluster
+	REGION=asia-south1
+	PROJECT_ID=kmc-hospital-project
 	
 	gcloud dataproc clusters create ${CLUSTER_NAME} \
 	    --region ${REGION} \
 	    --project ${PROJECT_ID} \
 	    --num-workers=2 \
-	    --worker-machine-type=n1-standard-2 \
+	    --worker-machine-type=n4-standard-2 \
 	    --worker-boot-disk-size=50GB \
-	    --master-machine-type=n1-standard-2 \
+	    --master-machine-type=n4-standard-2 \
 	    --master-boot-disk-size=50GB \
-	    --image-version=2.0-debian10 \
+	    --image-version=2.2-debian12 \
 	    --enable-component-gateway \
 	    --optional-components=JUPYTER \
 	    --scopes=cloud-platform \
