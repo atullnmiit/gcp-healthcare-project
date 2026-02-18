@@ -16,4 +16,5 @@ CLUSTER_NAME=my-cluster-demo
 	    --optional-components=JUPYTER \
 	    --scopes=cloud-platform \
 	    --metadata bigquery-connector-version=1.2.0,spark-bigquery-connector-version=0.21.0 \
+        --metadata=PIP_PACKAGES="google-cloud-bigquery google-cloud-storage " \
 	    --properties "spark:spark.executor.memory=4g,spark:spark.driver.memory=2g"
