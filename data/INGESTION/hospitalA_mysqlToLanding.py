@@ -46,7 +46,7 @@ MYSQL_CONFIG = {
     "url": "jdbc:mysql://34.100.141.90:3306/kmc-hospital-1-db?useSSL=false&allowPublicKeyRetrieval=true",
     "driver": "com.mysql.cj.jdbc.Driver",
     "user": "atul",
-    "password": "Test@12345"
+    "password": "Test%4012345"
 }
 
 ##------------------------------------------------------------------------------------------------------------------##
