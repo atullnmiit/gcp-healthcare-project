@@ -174,7 +174,7 @@ def read_config_file():
 config_df = read_config_file()
 
 for row in config_df.collect():
-    if row["is_active"] == '1' and row["datasource"] == "hospital_a_db": 
+    if row["is_active"] == '1' and row["datasource"] == "kmc-hospital-1-db": 
         db, src, table, load_type, watermark, _, targetpath = row
         move_existing_files_to_archive(table)
         extract_and_save_to_landing(table, load_type, watermark)
