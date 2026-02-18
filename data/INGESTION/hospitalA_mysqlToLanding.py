@@ -22,14 +22,14 @@ CONFIG_FILE_PATH = f"gs://{GCS_BUCKET}/Configs/load_config.csv"
 BQ_PROJECT = "avd-databricks-demo"
 BQ_AUDIT_TABLE = f"{BQ_PROJECT}.temp_dataset.audit_log"
 BQ_LOG_TABLE = f"{BQ_PROJECT}.temp_dataset.pipeline_logs"
-BQ_TEMP_PATH = f"{GCS_BUCKET}/temp/"  
+BQ_TEMP_PATH = f"{GCS_BUCKET}/Temp/"
 
 # MySQL Configuration
 MYSQL_CONFIG = {
-    "url": "jdbc:mysql://34.132.104.87:3306/hospital_a_db?useSSL=false&allowPublicKeyRetrieval=true",
+    "url": "jdbc:mysql://34.100.141.90:3306/hospital_a_db?useSSL=false&allowPublicKeyRetrieval=true",
     "driver": "com.mysql.cj.jdbc.Driver",
-    "user": "myuser",
-    "password": "mypass"
+    "user": "atul",
+    "password": "Test@12345"
 }
 
 ##------------------------------------------------------------------------------------------------------------------##
