@@ -78,7 +78,7 @@ def save_logs_to_bigquery():
 
 # Function to Move Existing Files to Archive
 def move_existing_files_to_archive(table):
-    blobs = list(storage_client.bucket(GCS_BUCKET).list_blobs(prefix=f"landing/{HOSPITAL_NAME}/{table}/"))
+    blobs = list(storage_client.bucket(GCS_BUCKET).list_blobs(prefix=f"Landing/{HOSPITAL_NAME}/{table}/"))
     existing_files = [blob.name for blob in blobs if blob.name.endswith(".json")]
 
     if not existing_files:
@@ -93,7 +93,7 @@ def move_existing_files_to_archive(table):
         year, month, day = date_part[-4:], date_part[2:4], date_part[:2]
 
         # Move to Archive
-        archive_path = f"landing/{HOSPITAL_NAME}/archive/{table}/{year}/{month}/{day}/{file.split('/')[-1]}"
+        archive_path = f"Landing/{HOSPITAL_NAME}/archive/{table}/{year}/{month}/{day}/{file.split('/')[-1]}"
         destination_blob = storage_client.bucket(GCS_BUCKET).blob(archive_path)
 
         # Copy file to archive and delete original
@@ -139,7 +139,7 @@ def extract_and_save_to_landing(table, load_type, watermark_col):
         log_event("SUCCESS", f"✅ Successfully extracted data from {table}", table=table)
 
         today = datetime.datetime.today().strftime('%d%m%Y')
-        JSON_FILE_PATH = f"landing/{HOSPITAL_NAME}/{table}/{table}_{today}.json"
+        JSON_FILE_PATH = f"Landing/{HOSPITAL_NAME}/{table}/{table}_{today}.json"
 
         bucket = storage_client.bucket(GCS_BUCKET)
         blob = bucket.blob(JSON_FILE_PATH)
