@@ -1,0 +1,59 @@
+Gemini said
+Here is the complete workflow rewritten to use a dedicated custom service account. This is the secure, best-practice method for production environments.
+
+Step 1: Create the Service Account & Grant Permissions
+Run these commands first to set up the identity and give it the necessary access to Storage, Dataproc, and BigQuery (since you are using BigQuery connectors).
+
+Bash
+# 1. Set your variables for easier reuse
+PROJECT_ID=kmc-hospital-project
+SA_NAME=dataproc-sa
+SA_EMAIL=${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
+
+# 2. Create the custom Service Account
+gcloud iam service-accounts create ${SA_NAME} \
+    --display-name="Dataproc Custom Service Account"
+
+# 3. Grant Storage Admin (Fixes your original error)
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+    --member "serviceAccount:${SA_EMAIL}" \
+    --role "roles/storage.objectAdmin"
+
+# 4. Grant Dataproc Worker (Required to run cluster jobs)
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+    --member "serviceAccount:${SA_EMAIL}" \
+    --role "roles/dataproc.worker"
+
+# 5. Grant BigQuery Editor (Required for your specific BigQuery connectors)
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+    --member "serviceAccount:${SA_EMAIL}" \
+    --role "roles/bigquery.dataEditor"
+Step 2: Create the Cluster
+Here is your original script, updated to use the new service account (--service-account) you just created.
+
+Bash
+CLUSTER_NAME=kmc-hospital-cluster
+REGION=asia-south1
+PROJECT_ID=kmc-hospital-project
+SA_EMAIL=dataproc-sa@kmc-hospital-project.iam.gserviceaccount.com
+
+gcloud dataproc clusters create ${CLUSTER_NAME} \
+    --region ${REGION} \
+    --project ${PROJECT_ID} \
+    --service-account=${SA_EMAIL} \
+    --num-workers=2 \
+    --worker-machine-type=n4-standard-2 \
+    --worker-boot-disk-size=50GB \
+    --master-machine-type=n4-standard-2 \
+    --master-boot-disk-size=50GB \
+    --image-version=2.2-debian12 \
+    --enable-component-gateway \
+    --optional-components=JUPYTER \
+    --scopes=cloud-platform \
+    --metadata bigquery-connector-version=1.2.0,spark-bigquery-connector-version=0.21.0 \
+    --metadata=PIP_PACKAGES="google-cloud-bigquery google-cloud-storage google-cloud-dataflow google-cloud-dataproc google-cloud-pubsub" \
+    --properties "spark:spark.executor.memory=4g,spark:spark.driver.memory=2g"
+Why this is better
+Isolation: If this cluster is compromised, the attacker only has access to what dataproc-sa can see, not your entire Compute Engine environment.
+
+Explicit Permissions: You explicitly granted storage.objectAdmin in Step 1, which directly resolves the missing permissions: [storage.objects.get, storage.objects.update] error you saw earlier.
