@@ -12,11 +12,11 @@ bq_client = bigquery.Client()
 spark = SparkSession.builder.appName("HospitalAMySQLToLanding").getOrCreate()
 
 # Google Cloud Storage (GCS) Configuration
-GCS_BUCKET = "healthcare-bucket-22032025"
-HOSPITAL_NAME = "hospital-a"
-LANDING_PATH = f"gs://{GCS_BUCKET}/landing/{HOSPITAL_NAME}/"
-ARCHIVE_PATH = f"gs://{GCS_BUCKET}/landing/{HOSPITAL_NAME}/archive/"
-CONFIG_FILE_PATH = f"gs://{GCS_BUCKET}/configs/load_config.csv"
+GCS_BUCKET = "kmc-hospital-bucket"
+HOSPITAL_NAME = "Hospital-1"
+LANDING_PATH = f"gs://{GCS_BUCKET}/Landing/{HOSPITAL_NAME}/"
+ARCHIVE_PATH = f"gs://{GCS_BUCKET}/Landing/{HOSPITAL_NAME}/archive/"
+CONFIG_FILE_PATH = f"gs://{GCS_BUCKET}/Configs/load_config.csv"
 
 # BigQuery Configuration
 BQ_PROJECT = "avd-databricks-demo"
